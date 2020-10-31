@@ -6,9 +6,6 @@ Rinse-repeat until no further edges can be removed.
 
 Not optimized or anything. For example, all candidiates are recalculated
 after removing an edge.
-
-2020-10
-rwijtvliet@gmail.com
 """
 
 import numpy as np
@@ -16,11 +13,24 @@ from scipy.spatial import Delaunay
 from typing import Iterable
 
 
-def is_convex_polygon(polygon):
-    """Return True if the polynomial defined by the sequence of 2D
-    points is convex, which is the case if 'driving around the polygon'
-    means 'never steer to the left' or 'never steer to the right'. No checks
-    are done for complex cases such as self-intersecting polygons etc.
+def is_convex_polygon(polygon:Iterable) -> bool:
+    """
+    Evaluates if a polygon is convex or not.
+
+    Parameters
+    ----------
+    polygon
+        Iterable of points (x, y) in order as they appear in the polygon.
+
+    Returns
+    -------
+    True if the polynomial is convex, False if it is not.
+
+    Notes
+    -----
+    Implementation: convexness is checked by 'driving around the polygon'.
+    Convex means 'never steer to the left' or 'never steer to the right'. No
+    checks are done for complex cases such as self-intersecting polygons etc.
     """
     polygon = np.array(polygon)
     if len(polygon) < 3:  # Check for too few points
@@ -40,18 +50,30 @@ def is_convex_polygon(polygon):
 
 class Polygonate:
     """
-    Turn a set of points into a set of non-overlapping polygons.
+    Tessellate a set of points with a set of non-overlapping polygons.
 
-    Arguments:
-        points: Iterable of (x, y)-points
-        pickedge:
-            'long' to remove the longest edge first;
-            'acute' to remove the most acute angle first (default);
-            'round' to remove edge to create polygon with roundest corners.
-        convex: True if resulting polygons must be convex (default).
+    Parameters
+    ----------
+    points
+        Iterable of points (x, y).
+    pickedge : {'actue', 'long', 'round'}, optional
+        'acute' to remove the most acute angle first;
+        'long' to remove the longest edge first;
+        'round' to remove edge to create polygon with roundest corners.
+    convex : bool, optional
+        True if polygons must be convex (default).
+
+    Attributes
+    ----------
+    points : ndarray of (x, y)
+        Coordinates of input points.
+    shapes : ndarray of ndarray of ints
+        Indices of points forming the vertices of the given shape.
+    neighbors : ndarray of ndarray of ints
+        Indices of shapes that are share at least 1 edge with the given shape.
     """
 
-    def __init__(self, points:Iterable, pickedge:str='', convex:bool=True):
+    def __init__(self, points:Iterable, *, pickedge:str='', convex:bool=True):
         self._points = np.array(points)
         self.__convex = convex
         self._shapes, self._neighbors, self._descendent_of_simplex = \
@@ -61,11 +83,6 @@ class Polygonate:
     def points(self):
         """The (x, y) coordinates of the points."""
         return self._points
-
-    @property
-    def vertices(self):
-        """The point-indices of the vertices of each shape."""
-        return self._shapes
 
     @property
     def shapes(self):
@@ -123,14 +140,14 @@ class Polygonate:
     def _candidates(self, shapes, neighbors):
         """
         Find the edges that could be removed. Also store additional information,
-        such as wall length and existing angles.
+        such as edge length and existing angles.
         """
-        def prepshape(shape, wall): #rotate/flip shape so, that wall[0] is at start and wall[1] is at end.
-            while len(np.intersect1d(shape[0:2], wall)) != 2:
+        def prepshape(shape, edge): #rotate/flip shape so, that edge[0] is at start and edge[1] is at end.
+            while len(np.intersect1d(shape[0:2], edge)) != 2:
                 shape = np.roll(shape, 1)
-            shape = np.roll(shape, -1)  # one vwall vertice at start, the other at the end.
-            if shape[0] == wall[1]:
-                shape = np.flip(shape)  # vwall[0] is at beginning, vwall[1] is at end
+            shape = np.roll(shape, -1)  # one edge vertice at start, the other at the end.
+            if shape[0] == edge[1]:
+                shape = np.flip(shape)  # edge[0] is at beginning, edge[1] is at end
             return shape
 
         def vec(*vi):
@@ -148,36 +165,43 @@ class Polygonate:
         for si1, neighbors in enumerate(neighbors):
             shape1 = shapes[si1]
             for si2 in neighbors:
-                if si1 > si2: continue  # only add each wall once
+                if si1 > si2: continue  # only add each edge once
                 shape2 = shapes[si2]
-                # Find vertices of shared wall.
-                wall = np.intersect1d(shape1, shape2)
-                if len(wall) != 2: continue
-                # Prepare by putting wall vertice 0 (1) at position 0 (-1) in each shape
-                shape1, shape2 = prepshape(shape1, wall), prepshape(shape2, wall)
+                # Find vertices of shared edge.
+                edge = np.intersect1d(shape1, shape2)
+                if len(edge) != 2: continue
+                # Prepare by putting edge vertice 0 (1) at position 0 (-1) in each shape
+                shape1, shape2 = prepshape(shape1, edge), prepshape(shape2, edge)
                 # Get candidate-polygon
                 shape3 = [*shape1[:-1], *shape2[::-1][:-1]]
                 if self.__convex and not is_convex_polygon(self._points[shape3]):
                     continue
                 # Add characteristics.
-                wallvec = vec(*wall)  # pointing 0->1
-                # Vectors pointing along the edges, starting at where wall is.
+                edgevec = vec(*edge)  # pointing 0->1
+                # Vectors pointing along the edges, starting at where edge is.
                 vecs = [[vec(*vi) for vi in [shape1[:2], shape2[:2]]],
                         [vec(*vi) for vi in [shape1[-2:], shape2[-2:]]]]
-                angles = np.array([[angle(wallvec, v) for v in vec] for vec in vecs]) #angles at corner 0, angles at corner 1
+                angles = np.array([[angle(edgevec, v) for v in vec] for vec in vecs]) #angles at corner 0, angles at corner 1
                 candidates.append({
-                    'wall': [*wall],
+                    'edge': [*edge],
                     'si': [si1, si2],
                     'shape3': shape3,
-                    'length': np.linalg.norm(wallvec),
+                    'length': np.linalg.norm(edgevec),
                     'angles_before': angles,
                     'angles_after': angles.sum(axis=1),
                     'error': np.abs(angles.sum(axis=1) - (np.pi * (1 - 2/len(shape3)))).mean()
                     })
         return candidates
 
-    def find_shape(self, point:Iterable, method=0):
-        """Returns index of shape that contain the point."""
+    def find_shape(self, point:Iterable) -> int:
+        """
+        Returns index of shape that contain the point.
+
+        Parameters
+        ----------
+        point
+            Coordinates (x, y) of point.
+        """
         sim = self._delaunay.find_simplex(point)
         if sim > -1:
             return self._descendent_of_simplex[sim]
@@ -194,9 +218,9 @@ class Polygonate:
                     ax.plot(*self._points[[vi1, vi2], :].T,
                             *args, **{'alpha': 1, **kwargs})
 
-    def plotremovablewalls(self, ax, *args, **kwargs):
+    def plotremovableedges(self, ax, *args, **kwargs):
         cands = self._candidates(self._delaunay.simplices, self._delaunay.neighbors)
-        for w in [cand['wall'] for cand in cands]:
+        for w in [cand['edge'] for cand in cands]:
             ax.plot(*self._points[w, :].T,
                     *args, **{'color': 'k', **kwargs})
 
