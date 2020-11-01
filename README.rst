@@ -15,7 +15,7 @@ Done by identifying the removable edges, and then removing one of them by some s
 
 Sample use, finding a set of convex polygons:
 
-.. code-block:: python
+.. code:: python
   import numpy as np
   from polygonation.polygonate import Polygonate
   n = 20
