@@ -250,7 +250,8 @@ class Polygonate:
     def plotdelaunay(self, ax, *args, **kwargs):
         indptr, indices = self._delaunay.vertex_neighbor_vertices
         for vi1 in np.arange(len(self._points)):
-            for vi2 in indices[indptr[vi1] : indptr[vi1 + 1]]:
+            strt, stop = indptr[vi1], indptr[vi1 + 1]
+            for vi2 in indices[strt:stop]:
                 if vi1 < vi2:
                     ax.plot(
                         *self._points[[vi1, vi2], :].T, *args, **{"alpha": 1, **kwargs}
