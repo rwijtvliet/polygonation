@@ -15,14 +15,14 @@ Done by identifying the removable edges, and then removing one of them by some s
 
 Sample use, finding a set of convex polygons:
 
-code-block:: python
+.. code-block:: python
   import numpy as np
   from polygonation.polygonate import Polygonate
   n = 20
   points = np.random.rand(n*2).reshape(-1, 2)
   pg = Polygonate(points)
   
-plot::
+.. plot::
   import numpy as np
   import matplotlib.pyplot as plt
   from polygonation.polygonate import Polygonate
