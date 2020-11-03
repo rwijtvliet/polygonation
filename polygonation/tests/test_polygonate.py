@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Oct 31 18:39:39 2020
-
-@author: ruud
-"""
-
 from ..polygonate import Polygonate
 import numpy as np
 from scipy.spatial import Delaunay

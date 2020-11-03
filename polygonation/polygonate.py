@@ -13,7 +13,7 @@ from scipy.spatial import Delaunay
 from typing import Iterable
 
 
-def is_convex_polygon(polygon: Iterable) -> bool:
+def is_convex(polygon: Iterable) -> bool:
     """
     Evaluates if a polygon is convex or not.
 
@@ -40,7 +40,7 @@ def is_convex_polygon(polygon: Iterable) -> bool:
         dxa, dya = p2 - p1
         dxb, dyb = p3 - p2
         cross = dxa * dyb - dya * dxb
-        if not np.isclose(cross, 0.0):
+        if not (-1e-5 < cross < 1e-5):
             if orientation == 0:
                 orientation = np.sign(cross)
             elif orientation != np.sign(cross):
@@ -68,9 +68,10 @@ class Polygonate:
     points : ndarray of (x, y)
         Coordinates of input points.
     shapes : ndarray of ndarray of ints
-        Indices of points forming the vertices of the given shape.
+        Indices of points forming the vertices of the calculated shapes.
     neighbors : ndarray of ndarray of ints
         Indices of shapes that are share at least 1 edge with the given shape.
+
     """
 
     def __init__(self, points: Iterable, *, pickedge: str = "", convex: bool = True):
@@ -203,7 +204,7 @@ class Polygonate:
                 shape1, shape2 = prepshape(shape1, edge), prepshape(shape2, edge)
                 # Get candidate-polygon
                 shape3 = [*shape1[:-1], *shape2[::-1][:-1]]
-                if self.__convex and not is_convex_polygon(self._points[shape3]):
+                if self.__convex and not is_convex(self._points[shape3]):
                     continue
                 # Add characteristics.
                 edgevec = vec(*edge)  # pointing 0->1
@@ -243,26 +244,3 @@ class Polygonate:
         if sim > -1:
             return self._descendent_of_simplex[sim]
         return -1
-
-    def plotpoints(self, ax, *args, **kwargs):
-        ax.plot(*self._points.T, *args, **kwargs)
-
-    def plotdelaunay(self, ax, *args, **kwargs):
-        indptr, indices = self._delaunay.vertex_neighbor_vertices
-        for vi1 in np.arange(len(self._points)):
-            strt, stop = indptr[vi1], indptr[vi1 + 1]
-            for vi2 in indices[strt:stop]:
-                if vi1 < vi2:
-                    ax.plot(
-                        *self._points[[vi1, vi2], :].T, *args, **{"alpha": 1, **kwargs}
-                    )
-
-    def plotremovableedges(self, ax, *args, **kwargs):
-        cands = self._candidates(self._delaunay.simplices, self._delaunay.neighbors)
-        for w in [cand["edge"] for cand in cands]:
-            ax.plot(*self._points[w, :].T, *args, **{"color": "k", **kwargs})
-
-    def plotpolygons(self, ax, *args, **kwargs):
-        for shape in self._shapes:
-            for vi in zip(shape, np.roll(shape, 1)):
-                ax.plot(*self._points[vi, :].T, *args, **{"color": "b", **kwargs})
