@@ -9,8 +9,8 @@ cache:
 env:
   global:
     # Doctr deploy key for rwijtvliet/polygonation
-    - secure: "Fk5lS2rDy34XJiKFjsWIXia/K9Xe1Qg3dxDJ+Lq1c2jVfrsOCLEYq5ySWCB9KqZb8vtRd5HRDtmAbTKfshT+eusCSgeKi14bnLKLWPJITROznKUzosoxFwIaT5yXi74DlwxP05YBg1O16NIdoz3sU/e67dOaicJ5Ty6O8fH4AlVQTArc05+fgSZR1WIT+g08WXCt3IudYTXEqWuBxJBzt75fTajPr1skaAk0aieAD3EIoLcs/2VgtNITUd25qN7BaZA3yF3BJ39VJr9mZvONfxFgJkNJ5XJ5xyz2p+KlfhkKFFPfLVuN+bq8KcGsd5O9OIEXq1sQEaJbgqzwwrQMeTO2EsCNrU7tKhrBaCPQGLp/nyk86+Vvy6BpswRzv/adETwcXelkmEJ+jA8BMnWQuB+RmUa05j2K2z3Stl22ZAXGibePhIPBdiWag1ldNCB81NPbHZUflKWz3v9Owt21ffHre0m3xAovUmLd9vI0n/TemPjXt7gmVEFJ0Ymc4tDmC8X9HMu+MiN1qZVzImnKEJHROOOiFM+DdaE6eScT+POCw38xKc1u7677pad+3kO+nSrorguR0PSUeTvv/k+AzaOzsemQ+2mHlF08+Nxl1a9k/SCuvtRwpkDdmoEBaVVav38wIWDiR0v4oUWPYR4T1CGALj/+FgG3byt0xynMP0g="
-
+    - secure: "aveR/cAbLPVLbrJPFkJc1Q50dzAdteI5j2eYWO6ah/zDmAjKm3MaCv0ak61bfPXUWHikml5sBgN7GGXsE+Lpw5SNxp6BKOFs10JRN3wIUEPME/0lxk6sm3Pm86E3bJRmP7S5aMT5IIfuS5U9/q0oqQ2NMnGKtnSCCdYishe03A/snNp7RtgBs1e24Xf5wwhR2ZfAwq3AdUljDkW2fb861ly4l8J3JXgPnWs13sBlOM6s6/KYF2oF7+mLq3TJYJCMb7EZE9prHEIsm3Wk/1sm2y/E8lrozFLkILuTqZUC3NczLK42rQQpD90mVcAhVgWSbfucojrK9kRraFzyLnYzRmQ6WsWS83xm08UFQh8BbWhEPeYcTAQO6uNjpsmu7bdQlIhw51QqeV9Kr8N838SdWXuIScIQLHyOJequEMiVMsxpNlV5uagAwCwtGjnUO5qJLQezPXvr+vPcFOuS/J+wCR6kStkhEAHnT1d/NVb6L9JdprgjzOU+bsnCRIyjOWqFfXUXwrM8laz3+iVArLofHbIoPc7WlI+1CJ7Mu69t9P66KUcQfFbrOqrBGbJp+OcMYYohNSM2ibzIQ6S3d03nqLWASmf7rVKZoTgC9X1VJrjeIqVKGqM58Blz4OuM6OlXFrLhhgDXYfWpYG93ISPN8slJfnLv1GlUcuQl3DBGQ5U="
+      
 install:
   # The versions of pip and numpy that come pre-installed are often too old and
   # can cause problems. Upgrade them.
@@ -25,4 +25,8 @@ script:
   - coverage report -m  # Generate test coverage report.
   - codecov  # Upload the report to codecov.
   - flake8  # Enforce code style ('relaxed' line length limit is set in .flake8 config file).
+  - set -e
   - make -C docs html  # Build the documentation.
+  - pip install doctr
+  - doctr deploy --built-docs <path/to/built/html/> <target-directory>
+
