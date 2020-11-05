@@ -29,7 +29,7 @@ Using the ``is_convex`` function to verify that all polygons are indeed convex:
    print([pg.is_convex(points[s]) for s in plgn1.shapes])
 
 
-If we let go of the convexness criterium, we can find a smaller set of polygons:
+If we let go of the convexity criterium, we can find a smaller set of polygons:
 
 .. ipython:: python
 
@@ -56,9 +56,10 @@ Here is a comparison of both polygonations:
         return fig
 
 .. ipython:: python
-    :suppress:
 
+    #(Plots shown below)
     @savefig plot1.png
+    @suppress
     plot1();
 
 
