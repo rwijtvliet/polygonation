@@ -39,8 +39,8 @@ If we let go of the convexity criterium, we can find a smaller set of polygons:
 Here is a comparison of both polygonations:
 
 .. ipython:: python
-   :suppress:
-
+    :suppress:
+   
     import matplotlib.pyplot as plt
     def plot1():
         fig, axes = plt.subplots(1, 2, figsize=(10, 5))
@@ -54,13 +54,11 @@ Here is a comparison of both polygonations:
             ax.set_title('convex = ' + ['True', 'False'][i])
         fig.tight_layout()
         return fig
+        
+    plot1().savefig('source/savefig/plot1.png') #not using @savefig, because it leaves an empty line
 
-.. ipython:: python
+.. image:: savefig/plot1.png
 
-    #(Plots shown below)
-    @savefig plot1.png
-    @suppress
-    plot1();
 
 
 Additional options
@@ -72,36 +70,49 @@ edge is removed in each step. Here is a comparison with a larger set of points:
 .. ipython:: python
     :suppress:
 
-    points = np.random.rand(60, 2)
-    def plot2(convex):
-        fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-        for i, j in np.ndindex(axes.shape):
-            ax = axes[i, j]
+    points = np.random.rand(10, 2)
+    
+    def plot2a():
+    	fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+    	axes[0].set_title('points')
+    	axes[1].triplot(*points.T, 'k-', alpha=0.5)
+    	axes[1].set_title('Delaunay grid')
+	for ax in axes:
+	    ax.plot(*points.T, 'ko')
             ax.set_xticks([])
             ax.set_yticks([])
             for s in ax.spines.values(): s.set_visible(False)
-            if i==0 and j<2: continue
-            kwargs = {'alpha': 0.1} if i > 0 else {}
+        fig.tight_layout()
+    	return fig
+    
+    def plot2(convex):
+        fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+        for ax in axes:
+            ax.set_xticks([])
+            ax.set_yticks([])
+            for s in ax.spines.values(): s.set_visible(False)
             ax.triplot(*points.T, 'k:', alpha=0.3)
-        fig.suptitle(f'convex = {convex}')
-        axes[0,0].set_title('points')
-        axes[0,0].plot(*points.T, 'ko')
-        axes[0,2].set_title('Delaunay grid')
-        for j, pickedge in enumerate(['long', 'acute', 'round']):
-            axes[1,j].set_title(f'pickedge = {pickedge}')
+        for ax, pickedge in zip(axes, ['long', 'acute', 'round']):
+            ax.set_title(f'pickedge = {pickedge}')
             for shape in pg.Polygonate(points, pickedge=pickedge, convex=convex).shapes:
-                 axes[1,j].plot(*points[[*shape, shape[0]]].T, 'b') # resulting polygons
+                 ax.plot(*points[[*shape, shape[0]]].T, 'b') # resulting polygons
         fig.tight_layout()
         return fig
 
-.. ipython:: python
-    :suppress:
+    plot2a().savefig('source/savefig/plot2a.png')
 
-    @savefig convexTrue.png
-    plot2(True)
+    plot2(True).savefig('source/savefig/plot2convextrue.png')
+    
+    plot2(False).savefig('source/savefig/plot2convexfalse.png')
+    
+The points and the Delaunay triangular tessellation for this example:
 
-.. ipython:: python
-    :suppress:
+.. image:: savefig/plot2a.png
 
-    @savefig convexFalse.png
-    plot2(False)
+Polygonation results with ``convex = True``:
+
+.. image:: savefig/plot2convextrue.png
+
+Polygonation results with ``convex = False``:
+
+.. image:: savefig/plot2convexfalse.png
