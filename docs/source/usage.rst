@@ -70,7 +70,7 @@ edge is removed in each step. Here is a comparison with a larger set of points:
 .. ipython:: python
     :suppress:
 
-    points = np.random.rand(10, 2)
+    points = np.random.rand(60, 2)
     
     def plot2a():
     	fig, axes = plt.subplots(1, 2, figsize=(10, 5))
