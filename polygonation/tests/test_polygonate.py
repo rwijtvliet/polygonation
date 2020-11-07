@@ -1,4 +1,4 @@
-from ..polygonate import Polygonate
+from .._core import Polygonate
 import numpy as np
 from scipy.spatial import Delaunay
 

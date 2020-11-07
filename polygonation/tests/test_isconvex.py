@@ -1,4 +1,4 @@
-from ..polygonate import is_convex
+from .._core import is_convex
 import numpy as np
 
 small_convex_polygon = [[0, 0], [0, 1], [1, 1], [1, 0]]
