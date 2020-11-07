@@ -9,7 +9,7 @@ Starting with importing relevant packages and creating some points in the plane:
 
 .. ipython:: python
 
-   import polygonation.polygonate as pg
+   import polygonation as pg
    import numpy as np
    points = np.random.rand(20, 2)
 
@@ -40,7 +40,7 @@ Here is a comparison of both polygonations:
 
 .. ipython:: python
     :suppress:
-   
+
     import matplotlib.pyplot as plt
     def plot1():
         fig, axes = plt.subplots(1, 2, figsize=(10, 5))
@@ -54,7 +54,7 @@ Here is a comparison of both polygonations:
             ax.set_title('convex = ' + ['True', 'False'][i])
         fig.tight_layout()
         return fig
-        
+
     plot1().savefig('source/savefig/plot1.png') #not using @savefig, because it leaves an empty line
 
 .. image:: savefig/plot1.png
@@ -71,7 +71,7 @@ edge is removed in each step. Here is a comparison with a larger set of points:
     :suppress:
 
     points = np.random.rand(60, 2)
-    
+
     def plot2a():
     	fig, axes = plt.subplots(1, 2, figsize=(10, 5))
     	axes[0].set_title('points')
@@ -84,7 +84,7 @@ edge is removed in each step. Here is a comparison with a larger set of points:
             for s in ax.spines.values(): s.set_visible(False)
         fig.tight_layout()
     	return fig
-    
+
     def plot2(convex):
         fig, axes = plt.subplots(1, 3, figsize=(15, 5))
         for ax in axes:
@@ -102,9 +102,9 @@ edge is removed in each step. Here is a comparison with a larger set of points:
     plot2a().savefig('source/savefig/plot2a.png')
 
     plot2(True).savefig('source/savefig/plot2convextrue.png')
-    
+
     plot2(False).savefig('source/savefig/plot2convexfalse.png')
-    
+
 The points and the Delaunay triangular tessellation for this example:
 
 .. image:: savefig/plot2a.png

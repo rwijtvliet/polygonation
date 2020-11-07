@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>polygonation.polygonate &mdash; polygonation 0.1.1 documentation</title>
+  <title>polygonation._core &mdash; polygonation 0.1.1.post1+g9d53072 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
             
             
               <div class="version">
-                0.1.1
+                0.1.1.post1+g9d53072
               </div>
             
           
@@ -140,7 +140,7 @@
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
-      <li>polygonation.polygonate</li>
+      <li>polygonation._core</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -155,7 +155,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for polygonation.polygonate</h1><div class="highlight"><pre>
+  <h1>Source code for polygonation._core</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Module to turn a set of points into a set of nonoverlapping polygons.</span>
 
@@ -171,7 +171,7 @@
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span>
 
 
-<div class="viewcode-block" id="is_convex"><a class="viewcode-back" href="../../api.html#polygonation.polygonate.is_convex">[docs]</a><span class="k">def</span> <span class="nf">is_convex</span><span class="p">(</span><span class="n">polygon</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="is_convex"><a class="viewcode-back" href="../../api.html#polygonation.is_convex">[docs]</a><span class="k">def</span> <span class="nf">is_convex</span><span class="p">(</span><span class="n">polygon</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Evaluates if a polygon is convex or not.</span>
 
@@ -206,7 +206,7 @@
     <span class="k">return</span> <span class="kc">True</span></div>
 
 
-<div class="viewcode-block" id="Polygonate"><a class="viewcode-back" href="../../api.html#polygonation.polygonate.Polygonate">[docs]</a><span class="k">class</span> <span class="nc">Polygonate</span><span class="p">:</span>
+<div class="viewcode-block" id="Polygonate"><a class="viewcode-back" href="../../api.html#polygonation.Polygonate">[docs]</a><span class="k">class</span> <span class="nc">Polygonate</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Tessellate a set of points with a set of non-overlapping polygons.</span>
 

@@ -3,7 +3,7 @@
 ./_images/plot2convexfalse.png
 ./_images/plot2convextrue.png
 ./_modules/index.html
-./_modules/polygonation/polygonate.html
+./_modules/polygonation/_core.html
 ./_sources/api.rst.txt
 ./_sources/index.rst.txt
 ./_sources/installation.rst.txt

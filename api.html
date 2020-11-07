@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Api reference &mdash; polygonation 0.1.1 documentation</title>
+  <title>Api reference &mdash; polygonation 0.1.1.post1+g9d53072 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.1.1
+                0.1.1.post1+g9d53072
               </div>
             
           
@@ -163,8 +163,8 @@
 <h1>Api reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
 <p>The package’s functionality is split into a fuction and a class:</p>
 <dl class="py function">
-<dt id="polygonation.polygonate.is_convex">
-<code class="sig-prename descclassname">polygonation.polygonate.</code><code class="sig-name descname">is_convex</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">polygon</span><span class="p">:</span> <span class="n">Iterable</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a><a class="reference internal" href="_modules/polygonation/polygonate.html#is_convex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygonation.polygonate.is_convex" title="Permalink to this definition">¶</a></dt>
+<dt id="polygonation.is_convex">
+<code class="sig-prename descclassname">polygonation.</code><code class="sig-name descname">is_convex</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">polygon</span><span class="p">:</span> <span class="n">Iterable</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a><a class="reference internal" href="_modules/polygonation/_core.html#is_convex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygonation.is_convex" title="Permalink to this definition">¶</a></dt>
 <dd><p>Evaluates if a polygon is convex or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -186,8 +186,8 @@ checks are done for complex cases such as self-intersecting polygons etc.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="polygonation.polygonate.Polygonate">
-<code class="sig-prename descclassname">polygonation.polygonate.</code><code class="sig-name descname">Polygonate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span><span class="p">:</span> <span class="n">Iterable</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">pickedge</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span> <span class="o">=</span> <span class="default_value">''</span></em>, <em class="sig-param"><span class="n">convex</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/polygonation/polygonate.html#Polygonate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygonation.polygonate.Polygonate" title="Permalink to this definition">¶</a></dt>
+<dt id="polygonation.Polygonate">
+<code class="sig-prename descclassname">polygonation.</code><code class="sig-name descname">Polygonate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">points</span><span class="p">:</span> <span class="n">Iterable</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">pickedge</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)">str</a></span> <span class="o">=</span> <span class="default_value">''</span></em>, <em class="sig-param"><span class="n">convex</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)">bool</a></span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/polygonation/_core.html#Polygonate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#polygonation.Polygonate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tessellate a set of points with a set of non-overlapping polygons.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
