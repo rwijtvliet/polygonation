@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Sample usage &mdash; polygonation 0.1.1.post1+g9d53072 documentation</title>
+  <title>Sample usage &mdash; polygonation 0.1.1.post2+g5ac8621 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.1.1.post1+g9d53072
+                0.1.1.post2+g5ac8621
               </div>
             
           
@@ -181,26 +181,25 @@ the <code class="docutils literal notranslate"><span class="pre">Polygonate</spa
 
 <span class="gp">In [5]: </span><span class="n">plgn1</span><span class="o">.</span><span class="n">shapes</span>
 <span class="gh">Out[5]: </span><span class="go"></span>
-<span class="go">[[5, 0, 8],</span>
-<span class="go"> [12, 15, 1],</span>
-<span class="go"> [9, 14, 8],</span>
-<span class="go"> [4, 6, 1],</span>
-<span class="go"> [15, 4, 1],</span>
-<span class="go"> [7, 18, 13],</span>
-<span class="go"> [7, 13, 8, 14],</span>
-<span class="go"> [12, 13, 18, 3],</span>
-<span class="go"> [2, 11, 5, 0],</span>
-<span class="go"> [11, 6, 17, 2],</span>
-<span class="go"> [0, 19, 9, 8],</span>
-<span class="go"> [15, 4, 6, 17, 10, 3, 12],</span>
-<span class="go"> [2, 0, 19, 10, 17],</span>
-<span class="go"> [10, 19, 9, 14, 7, 18, 3],</span>
-<span class="go"> [11, 5, 16, 1, 6]]</span>
+<span class="go">[[11, 14, 5],</span>
+<span class="go"> [14, 11, 13],</span>
+<span class="go"> [10, 16, 4],</span>
+<span class="go"> [0, 6, 12, 19],</span>
+<span class="go"> [8, 7, 11, 13],</span>
+<span class="go"> [0, 1, 15, 19],</span>
+<span class="go"> [5, 14, 6, 12],</span>
+<span class="go"> [3, 17, 9, 2],</span>
+<span class="go"> [8, 13, 17, 9],</span>
+<span class="go"> [1, 15, 4, 18, 2],</span>
+<span class="go"> [15, 4, 16, 19],</span>
+<span class="go"> [10, 5, 12, 19, 16],</span>
+<span class="go"> [7, 11, 5, 10, 4, 18],</span>
+<span class="go"> [9, 2, 18, 7, 8]]</span>
 </pre></div>
 </div>
 <p>Using the <code class="docutils literal notranslate"><span class="pre">is_convex</span></code> function to verify that all polygons are indeed convex:</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [6]: </span><span class="nb">print</span><span class="p">([</span><span class="n">pg</span><span class="o">.</span><span class="n">is_convex</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="n">s</span><span class="p">])</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">plgn1</span><span class="o">.</span><span class="n">shapes</span><span class="p">])</span>
-<span class="go">[True, True, True, True, True, True, True, True, True, True, True, True, True, True, True]</span>
+<span class="go">[True, True, True, True, True, True, True, True, True, True, True, True, True, True]</span>
 </pre></div>
 </div>
 <p>If we let go of the convexity criterium, we can find a smaller set of polygons:</p>
@@ -208,9 +207,9 @@ the <code class="docutils literal notranslate"><span class="pre">Polygonate</spa
 
 <span class="gp">In [8]: </span><span class="n">plgn2</span><span class="o">.</span><span class="n">shapes</span>
 <span class="gh">Out[8]: </span><span class="go"></span>
-<span class="go">[[0, 2, 19, 10, 14, 9],</span>
-<span class="go"> [6, 17, 10, 19, 2, 11, 16, 1, 12, 13, 7, 18, 3, 15, 4],</span>
-<span class="go"> [3, 15, 4, 6, 17, 10, 14, 9, 0, 2, 11, 16, 5, 8, 13, 7, 18]]</span>
+<span class="go">[[0, 6, 14, 5, 12, 19, 15, 16, 4, 1],</span>
+<span class="go"> [10, 4, 16, 15, 19, 12, 5, 11, 8, 9, 18, 7],</span>
+<span class="go"> [4, 10, 7, 18, 9, 8, 11, 5, 14, 13, 17, 3, 2, 1]]</span>
 </pre></div>
 </div>
 <p>Here is a comparison of both polygonations:</p>
