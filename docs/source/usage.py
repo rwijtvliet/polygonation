@@ -2,6 +2,9 @@
 Sample use of the Polygonate class.
 """
 
+import matplotlib.pyplot as plt
+
+
 import polygonation as pg
 import numpy as np
 
@@ -16,8 +19,6 @@ print([pg.is_convex(points[s]) for s in plgn1.shapes])
 
 plgn2 = pg.Polygonate(points, convex=False)
 plgn2.shapes
-
-import matplotlib.pyplot as plt
 
 
 def plot1():
